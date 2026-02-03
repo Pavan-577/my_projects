@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Chatbot</title>
+<style>
+body{margin:0;font-family:Arial;background:#343541;color:white;height:100vh;display:flex}
+.sidebar{width:250px;background:#202123;padding:15px}
+.chat{flex:1;display:flex;flex-direction:column}
+#chatbox{flex:1;padding:20px;overflow-y:auto}
+.msg{max-width:70%;padding:12px;border-radius:10px;margin:8px 0;white-space:pre-wrap}
+.user{background:#4f93ff;margin-left:auto}
+.bot{background:#444654}
+.input{display:flex;padding:10px;background:#202123}
+input{flex:1;padding:10px;border:none;border-radius:6px}
+button{margin-left:6px;padding:10px;border:none;border-radius:6px;cursor:pointer}
+</style>
+</head>
+
+<body>
+<div class="sidebar">
+  <h2>🤖 AI Chatbot</h2>
+  <div id="username">Hello</div>
+  <button onclick="clearChat()">Clear Chat</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<div class="chat">
+  <div id="chatbox"></div>
+  <div class="input">
+    <input id="message" placeholder="Message ChatGPT..."
+     onkeydown="if(event.key==='Enter')send()">
+    <button onclick="send()">Send</button>
+  </div>
+</div>
+
+<script>
+window.onload=()=>{
+ fetch("/load_history").then(r=>r.json()).then(d=>{
+  username.innerText="Hello "+d.name;
+  d.history.forEach(x=>add(x.message,x.role=="user"?"user":"bot"));
+ });
+}
+
+function add(t,c){
+ let d=document.createElement("div");
+ d.className="msg "+c;
+ d.innerText=t;
+ chatbox.appendChild(d);
+ chatbox.scrollTop=chatbox.scrollHeight;
+}
+
+function send(){
+ let m=message.value;
+ if(!m)return;
+ add(m,"user");
+ message.value="";
+ fetch("/chat",{method:"POST",headers:{"Content-Type":"application/json"},
+ body:JSON.stringify({message:m})})
+ .then(r=>r.json()).then(d=>add(d.reply,"bot"));
+}
+
+function clearChat(){
+ fetch("/clear",{method:"POST"}).then(()=>chatbox.innerHTML="");
+}
+
+function logout(){location.href="/logout";}
+</script>
+</body>
+</html>

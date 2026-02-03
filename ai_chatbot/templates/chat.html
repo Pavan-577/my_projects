@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="top">
+      <button id="newChat">＋ New Chat</button>
+      <input placeholder="Search chats..." id="search">
+      <div id="chatList"></div>
+    </div>
+
+    <div class="profile">
+      👤 {{name}}
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+
+  <!-- CHAT AREA -->
+  <div class="chat-area">
+    <div id="chatbox"></div>
+
+    <div class="input-area">
+      <input id="message" placeholder="Message AI Chatbot..."
+             onkeydown="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
