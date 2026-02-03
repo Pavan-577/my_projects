@@ -1,7 +1,0 @@
-Machine learning is a branch of artificial intelligence that enables systems to learn from data and improve automatically without explicit programming.
-
-Web development refers to the process of building and maintaining websites and web applications.
-
-Artificial intelligence is the simulation of human intelligence processes by machines especially computer systems.
-
-Python is a popular programming language known for its simplicity and wide usage in AI and web development.
